@@ -1,0 +1,1 @@
+java -Xms256M -Xmx256M -Dspring.config.location=/home/laurent/Jarvis/appLsi/resources/ -jar /home/laurent/Jarvis/appLsi/jarvis-exposition-0.0.1-SNAPSHOT.war

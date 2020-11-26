@@ -10,7 +10,7 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>openmoney-jarvis</artifactId>
+	<artifactId>jarvis-domain</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
