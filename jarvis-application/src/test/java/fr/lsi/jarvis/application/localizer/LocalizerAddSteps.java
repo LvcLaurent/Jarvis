@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 
@@ -17,30 +15,22 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-public class LocalizerSteps extends TestConfig {
+public class LocalizerAddSteps extends TestConfig {
 
 	@Autowired
 	ILocalizerService locationService;
-
-	/**
-	 * LOGGER
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(LocalizerSteps.class);
 
 	private LocationAddIn location;
 
 	@Given("L utilisateur veut ajouter {string} comme lieu")
 	public void l_utilisateur_veut_ajouter_locationName_comme_lieu(final String locationName) {
 		this.location = new LocationAddIn();
-		LOGGER.info(locationName + " est la location");
 		this.location.setLocationName(locationName);
 	}
 
 	@When("L utilisateur fait une demande d ajout avec la {double} et la {double}")
 	public void l_utilisateur_fait_une_demande_d_ajout_avec_la_longitude_et_la_lattitude(final double longitude,
 			final double latitude) {
-		LOGGER.info(longitude + " est la longitude");
-		LOGGER.info(latitude + " est la latitude");
 		this.location.setLatitude(Double.valueOf(latitude));
 		this.location.setLongitude(Double.valueOf(longitude));
 	}

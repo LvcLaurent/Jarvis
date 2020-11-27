@@ -14,8 +14,10 @@ import fr.lsi.jarvis.domain.localizer.ILocalizerService;
 import fr.lsi.jarvis.domain.localizer.ILocationRepository;
 import fr.lsi.jarvis.domain.localizer.constant.LocalizerConstant;
 import fr.lsi.jarvis.domain.localizer.model.LocalizerIn;
-import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.LocalizerOut;
 import fr.lsi.jarvis.domain.localizer.model.Location;
+import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.LocationDistance;
 
 /**
  * Locations service
@@ -30,18 +32,25 @@ public class LocalizerService implements ILocalizerService {
 	ILocationRepository locationRepo;
 
 	@Override
-	public Double location(final LocalizerIn demande) throws JarvisException {
-		final Double longitude = 50.3098886;
-		final Double latitude = 3.3351432;
-		final Location location = new Location(longitude, latitude, "maison");
-		final Location location2 = new Location(demande.getLongitude(), demande.getLatitude(), "user");
+	public LocalizerOut location(final LocalizerIn demande) throws JarvisException {
 
-		return this.calculDistance(location, location2);
+		final List<Location> tab = this.locationRepo.findAllEntity();
+		final Location locationActuel = new Location(demande.getLongitude(), demande.getLatitude(), "user");
+
+		final LocalizerOut reponse = new LocalizerOut();
+
+		for (final Location location : tab) {
+			final LocationDistance distance = new LocationDistance();
+			distance.setLocationName(location.getLocationName());
+			distance.setDistance(this.calculDistance(location, locationActuel));
+			reponse.getListLocationDistance().add(distance);
+		}
+
+		return reponse;
 	}
 
 	@Override
-	public Double calculDistance(final Location location1, final Location location2)
-			throws JarvisException {
+	public Integer calculDistance(final Location location1, final Location location2) throws JarvisException {
 		// =ACOS(SIN(RADIANS(B1))*SIN(RADIANS(B2))+COS(RADIANS(B1))*COS(RADIANS(B2))*COS(RADIANS(C1-C2)))*6371.
 		final Double radian1 = Math.toRadians(location1.getLongitude());
 		final Double sin1 = Math.sin(radian1);
@@ -56,7 +65,9 @@ public class LocalizerService implements ILocalizerService {
 		final Double avantAcos = (sin1 * sin2) + (cos1 * cos2 * cos3);
 		final Double acos = Math.acos(avantAcos);
 		final Double distance = acos * Double.valueOf(6371);
-		return distance;
+		final Integer reponse = (int) (distance * 1000);
+
+		return reponse;
 	}
 
 	@Override
@@ -76,6 +87,20 @@ public class LocalizerService implements ILocalizerService {
 	@Override
 	public List<Location> findAllEntity() throws JarvisException {
 		return this.locationRepo.findAllEntity();
+	}
+
+	@Override
+	public void deleteLocation(final Location location) throws JarvisException {
+		this.locationRepo.delete(location);
+
+	}
+
+	@Override
+	public void deleteAllLocation() throws JarvisException {
+		for (final Location location : this.findAllEntity()) {
+			this.deleteLocation(location);
+		}
+
 	}
 
 }

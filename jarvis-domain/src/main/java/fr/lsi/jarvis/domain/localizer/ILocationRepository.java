@@ -23,13 +23,24 @@ public interface ILocationRepository {
 	public Location save(final Location entity) throws JarvisException;
 
 	/**
+	 * is GPS coordinate
+	 *
+	 * @param longitude
+	 * @param latitude
+	 * @return
+	 * @throws JarvisException
+	 */
+	public boolean isNewGPS(final Double longitude, final double latitude) throws JarvisException;
+
+	/**
 	 * Allows search by GPS coordinate
 	 *
 	 * @param longitude
 	 * @param latitude
 	 * @return
+	 * @throws JarvisException
 	 */
-	public boolean isNewGPS(final Double longitude, final double latitude);
+	public Location findByGps(final Double longitude, final double latitude) throws JarvisException;
 
 	/**
 	 * return all Entity
@@ -38,5 +49,13 @@ public interface ILocationRepository {
 	 * @throws JarvisException
 	 */
 	public List<Location> findAllEntity() throws JarvisException;
+
+	/**
+	 * Supprime Entity
+	 *
+	 * @param location
+	 * @throws JarvisException
+	 */
+	public void delete(final Location location) throws JarvisException;
 
 }

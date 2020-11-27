@@ -8,6 +8,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,13 +38,45 @@ public class LocationRepository extends AbstractJpaRepository<LocationEntity> im
 	}
 
 	@Override
+	@Transactional
 	public Location save(final Location entity) throws JarvisException {
 		final LocationEntity location = this.save(this.mapper.LocationToEntity(entity));
 		return this.mapper.entityToLocation(location);
 	}
 
 	@Override
-	public boolean isNewGPS(final Double longitude, final double latitude) {
+	@Transactional
+	public boolean isNewGPS(final Double longitude, final double latitude) throws JarvisException {
+		final Location location = this.findByGps(longitude, latitude);
+		if (location != null) {
+			return Boolean.FALSE;
+		}
+		return Boolean.TRUE;
+	}
+
+	@Override
+	@Transactional
+	public List<Location> findAllEntity() throws JarvisException {
+		final List<LocationEntity> array = this.findAll();
+		final List<Location> arrayResult = new ArrayList<>();
+
+		for (final LocationEntity location : array) {
+			arrayResult.add(this.mapper.entityToLocation(location));
+		}
+
+		return arrayResult;
+	}
+
+	@Override
+	@Transactional
+	public void delete(final Location location) throws JarvisException {
+		this.delete(this.mapper.LocationToEntity(location));
+
+	}
+
+	@Override
+	@Transactional
+	public Location findByGps(final Double longitude, final double latitude) throws JarvisException {
 		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
 		final CriteriaQuery<LocationEntity> cq = cb.createQuery(LocationEntity.class);
 
@@ -54,19 +87,12 @@ public class LocationRepository extends AbstractJpaRepository<LocationEntity> im
 
 		final TypedQuery<LocationEntity> query = this.em.createQuery(cq);
 
-		return query.getResultList().isEmpty();
-	}
-
-	@Override
-	public List<Location> findAllEntity() throws JarvisException {
-		final List<LocationEntity> array = this.findAll();
-		final List<Location> arrayResult = new ArrayList<>();
-
-		for (final LocationEntity location : array) {
-			arrayResult.add(this.mapper.entityToLocation(location));
+		if (!query.getResultList().isEmpty()) {
+			final LocationEntity tmp = query.getResultList().get(0);
+			final Location result = this.mapper.entityToLocation(tmp);
+			return result;
 		}
-
-		return arrayResult;
+		return null;
 	}
 
 }

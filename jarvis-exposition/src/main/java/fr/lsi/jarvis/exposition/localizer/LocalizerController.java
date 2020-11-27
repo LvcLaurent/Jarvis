@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.lsi.jarvis.domain.exception.JarvisException;
 import fr.lsi.jarvis.domain.localizer.ILocalizerService;
 import fr.lsi.jarvis.domain.localizer.model.LocalizerIn;
+import fr.lsi.jarvis.domain.localizer.model.LocalizerOut;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -52,12 +53,10 @@ public class LocalizerController {
 	 */
 	@ApiOperation(value = "Coordinate calculation")
 	@PostMapping(value = "/localize/calculate")
-	public Double localizer(@RequestBody final LocalizerIn request) throws JarvisException {
+	public LocalizerOut localizer(@RequestBody final LocalizerIn request) throws JarvisException {
 		LOGGER.info("location request");
 
-		final Double distance = this.localizerService.location(request);
-
-		return distance;
+		return this.localizer(request);
 
 	}
 

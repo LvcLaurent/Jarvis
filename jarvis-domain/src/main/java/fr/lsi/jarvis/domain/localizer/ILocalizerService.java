@@ -7,8 +7,9 @@ import java.util.List;
 
 import fr.lsi.jarvis.domain.exception.JarvisException;
 import fr.lsi.jarvis.domain.localizer.model.LocalizerIn;
-import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.LocalizerOut;
 import fr.lsi.jarvis.domain.localizer.model.Location;
+import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
 
 /**
  * Location service interface
@@ -25,7 +26,7 @@ public interface ILocalizerService {
 	 * @return The distance between the user and the location
 	 * @throws JarvisException
 	 */
-	public Double location(final LocalizerIn demande) throws JarvisException;
+	public LocalizerOut location(final LocalizerIn demande) throws JarvisException;
 
 	/**
 	 * Distance calculation between two locations
@@ -35,7 +36,7 @@ public interface ILocalizerService {
 	 * @return
 	 * @throws JarvisException
 	 */
-	public Double calculDistance(final Location location1, final Location location2) throws JarvisException;
+	public Integer calculDistance(final Location location1, final Location location2) throws JarvisException;
 
 	/**
 	 * location add function
@@ -52,5 +53,21 @@ public interface ILocalizerService {
 	 * @throws JarvisException
 	 */
 	public List<Location> findAllEntity() throws JarvisException;
+
+	/**
+	 * delete Entity
+	 *
+	 * @param location
+	 * @throws JarvisException
+	 */
+	public void deleteLocation(Location location) throws JarvisException;
+
+	/**
+	 * delete all Entity
+	 *
+	 * @return
+	 * @throws JarvisException
+	 */
+	public void deleteAllLocation() throws JarvisException;
 
 }
