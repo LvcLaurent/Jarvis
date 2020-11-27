@@ -1,7 +1,7 @@
 /**
  * 
  */
-package fr.lsi.jarvis.domain.localizer;
+package fr.lsi.jarvis.domain.localizer.model;
 
 /**
  * Input request for the location service

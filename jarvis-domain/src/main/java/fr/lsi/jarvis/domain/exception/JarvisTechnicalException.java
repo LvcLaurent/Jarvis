@@ -1,18 +1,16 @@
 /**
- * 
+ *
  */
 package fr.lsi.jarvis.domain.exception;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * For Technical exceptions
- * 
+ *
  * @author Laurent SION
  *
  */
 public class JarvisTechnicalException extends JarvisException {
-	
+
 	/**
 	 * ID class
 	 */
@@ -20,17 +18,16 @@ public class JarvisTechnicalException extends JarvisException {
 
 	/**
 	 * Constructor of a technical exception
-	 * 
+	 *
 	 * @param status
 	 * @param message
 	 * @param information
 	 * @param code
 	 */
-	public JarvisTechnicalException(final HttpStatus status, final String message, final String information, final Integer code) {
+	public JarvisTechnicalException(final String message, final String information, final Integer code) {
 		this.setCode(code);
 		this.setInformation(information);
 		this.setMessage(message);
-		this.setStatus(status);
 	}
 
 }

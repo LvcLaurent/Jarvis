@@ -14,6 +14,7 @@
 	<packaging>jar</packaging>
 
 	<dependencies>
+		<!-- Dépendance Interne -->
 		<dependency>
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-domain</artifactId>
@@ -23,9 +24,10 @@
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-infrastructure</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>runtime</scope>
+			<scope>test-runtime</scope>
 		</dependency>
 
+		<!-- Dépendance Serveur -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -35,9 +37,26 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dépendance Test -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-spring</artifactId>
 			<scope>test</scope>
 		</dependency>
 

@@ -14,6 +14,7 @@
 	<packaging>war</packaging>
 
 	<dependencies>
+		<!-- Dépendance Interne -->
 		<dependency>
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-domain</artifactId>
@@ -29,45 +30,56 @@
 			<artifactId>jarvis-site</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
+		<!-- Dépendance Serveur -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-      		<groupId>org.springframework.boot</groupId>
-      		<artifactId>spring-boot-starter-test</artifactId>
-      		<scope>test</scope>
-      		<exclusions>
-        		<exclusion>
-          			<groupId>org.junit.vintage</groupId>
-          			<artifactId>junit-vintage-engine</artifactId>
-        		</exclusion>
-      		</exclusions>
-    	</dependency>
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId> 
+			<artifactId>springfox-swagger2</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 		</dependency>
-    		<dependency>
-      			<groupId>org.springframework.security</groupId>
-      			<artifactId>spring-security-test</artifactId>
-      			<scope>test</scope>
-    		</dependency>
-			<dependency>
-    			<groupId>com.h2database</groupId>
-    			<artifactId>h2</artifactId>
-      			<scope>test</scope>
-			</dependency>
+		<!-- Dépendance Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
