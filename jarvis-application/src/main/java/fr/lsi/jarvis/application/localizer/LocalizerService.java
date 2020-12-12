@@ -3,21 +3,27 @@
  */
 package fr.lsi.jarvis.application.localizer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import fr.lsi.jarvis.domain.exception.JarvisException;
 import fr.lsi.jarvis.domain.exception.JarvisFunctionalException;
+import fr.lsi.jarvis.domain.jeedom.localizer.IPushJeedom;
 import fr.lsi.jarvis.domain.localizer.ILocalizerService;
 import fr.lsi.jarvis.domain.localizer.ILocationRepository;
 import fr.lsi.jarvis.domain.localizer.constant.LocalizerConstant;
-import fr.lsi.jarvis.domain.localizer.model.LocalizerIn;
-import fr.lsi.jarvis.domain.localizer.model.LocalizerOut;
 import fr.lsi.jarvis.domain.localizer.model.Location;
-import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
-import fr.lsi.jarvis.domain.localizer.model.LocationDistance;
+import fr.lsi.jarvis.domain.localizer.model.User;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerIn;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerOut;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocationDistance;
 
 /**
  * Locations service
@@ -28,8 +34,16 @@ import fr.lsi.jarvis.domain.localizer.model.LocationDistance;
 @Service
 public class LocalizerService implements ILocalizerService {
 
+	/**
+	 * LOGGER
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(LocalizerService.class);
+
 	@Autowired
 	ILocationRepository locationRepo;
+
+	@Autowired
+	IPushJeedom pushJeedom;
 
 	@Override
 	public LocalizerOut location(final LocalizerIn demande) throws JarvisException {
@@ -43,6 +57,17 @@ public class LocalizerService implements ILocalizerService {
 			final LocationDistance distance = new LocationDistance();
 			distance.setLocationName(location.getLocationName());
 			distance.setDistance(this.calculDistance(location, locationActuel));
+			for (final User user : location.getListPeople()) {
+				if (demande.getIdUser().equals(user.getUser())) {
+					this.pushJeedom.postToVirtualJeedom(Integer.valueOf(user.getIdCmd()),
+							distance.getDistance().toString());
+					try {
+						Thread.sleep(1500);
+					} catch (final InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 			reponse.getListLocationDistance().add(distance);
 		}
 
@@ -101,6 +126,38 @@ public class LocalizerService implements ILocalizerService {
 			this.deleteLocation(location);
 		}
 
+	}
+
+	@Override
+	public void addUserInLocation(final String locationName, final String name, final Integer idCmd)
+			throws JarvisException {
+		final Location location = this.locationRepo.findByName(locationName);
+
+		if (location == null) {
+			throw new JarvisFunctionalException(LocalizerConstant.RETURN_LOCATION_INCONNU_LOCALIZER_ERROR_MESSAGE,
+					LocalizerConstant.RETURN_LOCATION_INCONNU_LOCALIZER_ERROR_INFO,
+					LocalizerConstant.RETURN_LOCATION_INCONNU_LOCALIZER_ERROR_CODE);
+		}
+
+		final User user = new User();
+		user.setIdCmd(idCmd);
+		user.setUser(name);
+		user.setLocation(location);
+		user.setUuid(UUID.randomUUID().toString());
+
+		if (location.getListPeople() == null) {
+			location.setListPeople(new ArrayList<>());
+		} else {
+			for (final User u : location.getListPeople()) {
+				if ((name == null) || name.equals(u.getUser())) {
+					throw new JarvisFunctionalException(LocalizerConstant.RETURN_USERNAME_CONNU_LOCALIZER_ERROR_MESSAGE,
+							LocalizerConstant.RETURN_USERNAME_CONNU_LOCALIZER_ERROR_INFO,
+							LocalizerConstant.RETURN_USERNAME_CONNU_LOCALIZER_ERROR_CODE);
+				}
+			}
+		}
+		location.getListPeople().add(user);
+		this.locationRepo.save(location);
 	}
 
 }

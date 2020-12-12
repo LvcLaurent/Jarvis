@@ -3,6 +3,7 @@
  */
 package fr.lsi.jarvis.domain.localizer.model;
 
+import java.util.List;
 import java.util.UUID;
 
 import fr.lsi.jarvis.domain.exception.JarvisFunctionalException;
@@ -39,7 +40,7 @@ public class Location {
 	/**
 	 * List of people present
 	 */
-	private String listPeople;
+	private List<User> listPeople;
 
 	/**
 	 * Constructor of locationEntity
@@ -60,6 +61,7 @@ public class Location {
 		this.latitude = latitude;
 		this.locationName = location;
 		this.uuid = UUID.randomUUID().toString();
+		this.listPeople = null;
 	}
 
 	/**
@@ -93,14 +95,14 @@ public class Location {
 	/**
 	 * @return the listPeople
 	 */
-	public final String getListPeople() {
+	public final List<User> getListPeople() {
 		return this.listPeople;
 	}
 
 	/**
 	 * @param listPeople the listPeople to set
 	 */
-	public final void setListPeople(final String listPeople) {
+	public final void setListPeople(final List<User> listPeople) {
 		this.listPeople = listPeople;
 	}
 

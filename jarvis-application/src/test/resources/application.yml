@@ -13,3 +13,7 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+  
+jeedom : 
+  url: https://laurentetpauline.fr/core/api/jeeApi.php
+  apikey: 0dxklpT0mgtEYB9wsUH4KD5paONH3ZK8

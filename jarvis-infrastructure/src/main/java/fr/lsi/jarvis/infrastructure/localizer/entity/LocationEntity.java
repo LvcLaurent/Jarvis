@@ -3,10 +3,16 @@
  */
 package fr.lsi.jarvis.infrastructure.localizer.entity;
 
+import java.util.List;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import fr.lsi.jarvis.infrastructure.generic.EntityIO;
 
@@ -17,6 +23,7 @@ import fr.lsi.jarvis.infrastructure.generic.EntityIO;
  *
  */
 @Entity
+@Table(name = "location_entity")
 public class LocationEntity extends EntityIO {
 
 	/**
@@ -28,27 +35,32 @@ public class LocationEntity extends EntityIO {
 	 * Final uuid
 	 */
 	@Id
+	@Column(name = "uuid")
 	private String uuid;
 
 	/**
 	 * location name
 	 */
+	@Column(name = "locationName")
 	private String locationName;
 
 	/**
 	 * longitude
 	 */
+	@Column(name = "longitude")
 	private Double longitude;
 
 	/**
 	 * latitude
 	 */
+	@Column(name = "latitude")
 	private Double latitude;
 
 	/**
 	 * List of people present
 	 */
-	private String listPeople;
+	@OneToMany(mappedBy = "location", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<UserEntity> listPeople;
 
 	public LocationEntity(final Double longitude, final Double latitude, final String locationName) {
 		this();
@@ -97,14 +109,14 @@ public class LocationEntity extends EntityIO {
 	/**
 	 * @return the listPeople
 	 */
-	public String getListPeople() {
+	public List<UserEntity> getListPeople() {
 		return this.listPeople;
 	}
 
 	/**
 	 * @param listPeople the listPeople to set
 	 */
-	public void setListPeople(final String listPeople) {
+	public void setListPeople(final List<UserEntity> listPeople) {
 		this.listPeople = listPeople;
 	}
 

@@ -1,4 +1,4 @@
-package fr.lsi.jarvis.domain.localizer.model;
+package fr.lsi.jarvis.domain.localizer.model.exposition;
 
 import java.util.ArrayList;
 import java.util.List;

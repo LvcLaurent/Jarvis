@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>fr.lsi</groupId>
 		<artifactId>jarvis</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>jarvis-exposition</artifactId>
@@ -18,17 +18,17 @@
 		<dependency>
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-domain</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-application</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>fr.lsi</groupId>
 			<artifactId>jarvis-site</artifactId>
-			<version>0.1.0-SNAPSHOT</version>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- Dépendance Serveur -->
 		<dependency>

@@ -40,7 +40,7 @@ public class LocationRepository extends AbstractJpaRepository<LocationEntity> im
 	@Override
 	@Transactional
 	public Location save(final Location entity) throws JarvisException {
-		final LocationEntity location = this.save(this.mapper.LocationToEntity(entity));
+		final LocationEntity location = this.save(this.mapper.locationToEntity(entity));
 		return this.mapper.entityToLocation(location);
 	}
 
@@ -70,7 +70,7 @@ public class LocationRepository extends AbstractJpaRepository<LocationEntity> im
 	@Override
 	@Transactional
 	public void delete(final Location location) throws JarvisException {
-		this.delete(this.mapper.LocationToEntity(location));
+		this.delete(this.mapper.locationToEntity(location));
 
 	}
 
@@ -89,8 +89,25 @@ public class LocationRepository extends AbstractJpaRepository<LocationEntity> im
 
 		if (!query.getResultList().isEmpty()) {
 			final LocationEntity tmp = query.getResultList().get(0);
-			final Location result = this.mapper.entityToLocation(tmp);
-			return result;
+			return this.mapper.entityToLocation(tmp);
+		}
+		return null;
+	}
+
+	@Override
+	public Location findByName(final String locationName) throws JarvisException {
+		final CriteriaBuilder cb = this.em.getCriteriaBuilder();
+		final CriteriaQuery<LocationEntity> cq = cb.createQuery(LocationEntity.class);
+
+		final Root<LocationEntity> location = cq.from(LocationEntity.class);
+		final Predicate locationNameEqual = cb.equal(location.get("locationName"), locationName);
+		cq.where(locationNameEqual);
+
+		final TypedQuery<LocationEntity> query = this.em.createQuery(cq);
+
+		if (!query.getResultList().isEmpty()) {
+			final LocationEntity tmp = query.getResultList().get(0);
+			return this.mapper.entityToLocation(tmp);
 		}
 		return null;
 	}

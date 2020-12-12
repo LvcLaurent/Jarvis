@@ -17,18 +17,31 @@ Feature: localizer
       | travail      | 50.3271336 | 3.3968988 | NOK    |
 
   @tag2
+  Scenario Outline: L utilisateur ajouter des utilisateur pour un lieux
+    Given L utilisateur fait la demande avec l <id> de jeedom et "<locationName>"
+    When avec le <nom> du user l api effectue la sauvegarde en base
+    Then L utilisateur verifie qu il a un retour <status>
+
+    Examples: 
+      | locationName | id     | nom     | status |
+      | maison       |   2064 | Pauline | OK     |
+      | travail Veto |   2114 | Pauline | OK     |
+      | maison       | 302565 | Pauline | NOK    |
+      | travail6     |    356 | Pauline | NOK    |
+
+  @tag3
   Scenario Outline: L utilisateur connaitre sa position en fonction des lieux présent en base
     Given L utilisateur veut ajouter fournit la <longitude> et la <lattitude>
-    When Un calcul est effectuer par l API
+    When Un calcul est effectuer par l API avec le <user>
     Then la <distance1> et la <distance2> correspond bien à la distance attendu
 
     Examples: 
-      | longitude  | lattitude | distance1 | distance2 |
-      | 50.3106593 | 3.3398644 |         0 |      4444 |
-      | 50.3271336 | 3.3968988 |      4444 |         0 |
-      | 50.3271336 | 3.3968988 |      4444 |         0 |
+      | user    | longitude  | lattitude | distance1 | distance2 |
+      | Pauline | 50.3145317 | 3.3517719 |       948 |      3496 |
+      | Pauline | 50.3271336 | 3.3968988 |      4444 |         0 |
+      | Pauline | 50.3106593 | 3.3398644 |         0 |      4444 |
 
-  @tag3
+  @tag4
   Scenario Outline: L utilisateur veut supprimer tout les lieux en base
     Given L utilisateur fait la demande
     When l API fait la suppression

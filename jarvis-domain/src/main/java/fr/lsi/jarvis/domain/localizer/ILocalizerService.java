@@ -6,10 +6,10 @@ package fr.lsi.jarvis.domain.localizer;
 import java.util.List;
 
 import fr.lsi.jarvis.domain.exception.JarvisException;
-import fr.lsi.jarvis.domain.localizer.model.LocalizerIn;
-import fr.lsi.jarvis.domain.localizer.model.LocalizerOut;
 import fr.lsi.jarvis.domain.localizer.model.Location;
-import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerIn;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerOut;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocationAddIn;
 
 /**
  * Location service interface
@@ -69,5 +69,16 @@ public interface ILocalizerService {
 	 * @throws JarvisException
 	 */
 	public void deleteAllLocation() throws JarvisException;
+
+	/**
+	 * add user In Location
+	 *
+	 * @param locationName
+	 * @param user
+	 * @param idCmd
+	 * @throws JarvisException
+	 */
+	public void addUserInLocation(final String locationName, final String name, final Integer idCmd)
+			throws JarvisException;
 
 }

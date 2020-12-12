@@ -27,6 +27,6 @@ public interface ILocationMapper {
 	 * @param entity
 	 * @return
 	 */
-	LocationEntity LocationToEntity(Location location) throws JarvisException;
+	LocationEntity locationToEntity(Location location) throws JarvisException;
 
 }

@@ -43,6 +43,15 @@ public interface ILocationRepository {
 	public Location findByGps(final Double longitude, final double latitude) throws JarvisException;
 
 	/**
+	 * Allows search by location name
+	 *
+	 * @param name
+	 * @return
+	 * @throws JarvisException
+	 */
+	public Location findByName(final String locationName) throws JarvisException;
+
+	/**
 	 * return all Entity
 	 *
 	 * @return

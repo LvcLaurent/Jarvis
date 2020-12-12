@@ -14,10 +14,16 @@ public abstract class EntityIO implements Serializable {
 	@Id
 	private String uuid;
 
+	/**
+	 * @return the uuid
+	 */
 	public String getUuid() {
 		return this.uuid;
 	}
 
+	/**
+	 * @param uuid the uuid to set
+	 */
 	public void setUuid(final String uuid) {
 		this.uuid = uuid;
 	}

@@ -10,7 +10,7 @@ import org.springframework.test.annotation.Rollback;
 
 import fr.lsi.jarvis.domain.exception.JarvisException;
 import fr.lsi.jarvis.domain.localizer.ILocalizerService;
-import fr.lsi.jarvis.domain.localizer.model.LocationAddIn;
+import fr.lsi.jarvis.domain.localizer.model.exposition.LocationAddIn;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
