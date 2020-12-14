@@ -9,6 +9,6 @@ import io.cucumber.junit.CucumberOptions;
 @RunWith(Cucumber.class)
 @ActiveProfiles("test")
 @CucumberOptions(publish = false)
-public class RunCucumberTest {
+public class RunCucumberLocalizerTest {
 
 }
