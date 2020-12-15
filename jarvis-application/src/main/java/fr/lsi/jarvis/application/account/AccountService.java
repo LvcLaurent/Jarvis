@@ -103,11 +103,11 @@ public class AccountService implements IAccountService {
 			throw new JarvisFunctionalException(AccountConstant.RETURN_PASSWORD_CREATE_MESSAGE,
 					AccountConstant.RETURN_PASSWORD_CREATE_INFO, AccountConstant.RETURN_PASSWORD_CREATE_CODE);
 		}
-		if (VerificationChaine.nbrMin(account.getPassword()) == 0) {
+		if (VerificationChaine.nbrMajuscule(account.getPassword()) == 0) {
 			throw new JarvisFunctionalException(AccountConstant.RETURN_PASSWORD_CREATE_MESSAGE,
 					AccountConstant.RETURN_PASSWORD_CREATE_INFO, AccountConstant.RETURN_PASSWORD_CREATE_CODE);
 		}
-		if (VerificationChaine.nbrMaj(account.getPassword()) == 0) {
+		if (VerificationChaine.nbrMinuscule(account.getPassword()) == 0) {
 			throw new JarvisFunctionalException(AccountConstant.RETURN_PASSWORD_CREATE_MESSAGE,
 					AccountConstant.RETURN_PASSWORD_CREATE_INFO, AccountConstant.RETURN_PASSWORD_CREATE_CODE);
 		}
@@ -265,6 +265,12 @@ public class AccountService implements IAccountService {
 			throw new JarvisFunctionalException(AccountConstant.RETURN_LOGIN_UNKNOW_MESSAGE,
 					AccountConstant.RETURN_LOGIN_UNKNOW_INFO, AccountConstant.RETURN_LOGIN_UNKNOW_CODE);
 		}
+	}
+
+	@Override
+	public List<Account> getInactifAccount() throws JarvisException {
+		return this.accountRepo.findAllEntityInactif();
+
 	}
 
 }

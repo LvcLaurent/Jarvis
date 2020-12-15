@@ -14,7 +14,7 @@ public final class VerificationChaine {
 	 * @param chaine
 	 * @return
 	 */
-	public static int nbrMaj(final char[] chaine) {
+	public static int nbrMinuscule(final char[] chaine) {
 		int compteur = 0;
 		for (int i = 0; i < chaine.length; i++) {
 			final char ch = chaine[i];
@@ -31,7 +31,7 @@ public final class VerificationChaine {
 	 * @param chaine
 	 * @return
 	 */
-	public static int nbrMin(final char[] chaine) {
+	public static int nbrMajuscule(final char[] chaine) {
 		int compteur = 0;
 		for (int i = 0; i < chaine.length; i++) {
 			final char ch = chaine[i];

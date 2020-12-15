@@ -156,4 +156,12 @@ public interface IAccountService {
 	 * @throws JarvisFunctionalException
 	 */
 	public void verifAccount(final Account account) throws JarvisException;
+
+	/**
+	 * Remonte la liste des comptes inactif
+	 *
+	 * @param account
+	 * @throws JarvisFunctionalException
+	 */
+	public List<Account> getInactifAccount() throws JarvisException;
 }

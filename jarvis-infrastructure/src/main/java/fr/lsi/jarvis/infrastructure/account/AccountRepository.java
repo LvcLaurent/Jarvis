@@ -84,7 +84,7 @@ public class AccountRepository extends AbstractJpaRepository<AccountEntity> impl
 		final CriteriaQuery<AccountEntity> cq = cb.createQuery(AccountEntity.class);
 
 		final Root<AccountEntity> account = cq.from(AccountEntity.class);
-		final Predicate accountInactifEqual = cb.equal(account.get("actif"), Boolean.TRUE);
+		final Predicate accountInactifEqual = cb.equal(account.get("actif"), Boolean.FALSE);
 		cq.where(accountInactifEqual);
 
 		final TypedQuery<AccountEntity> query = this.em.createQuery(cq);
@@ -98,7 +98,7 @@ public class AccountRepository extends AbstractJpaRepository<AccountEntity> impl
 			}
 			return resultList;
 		}
-		return null;
+		return resultList;
 	}
 
 	@Override

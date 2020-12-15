@@ -13,7 +13,7 @@ Feature: account
     Examples: 
       | login      | mail                       | mdp        | tel        | nom       | prenom  | rue                     | codeP | ville  | possible | etat | code | admin |
       |            | newadress@hotmail.com      | Qsdfgh21!  | 0855221144 | Sion      | bilbon  | 134 rue jean jaures     | 59172 |  59172 | false    | NOK  | 2001 | false |
-      | lvclaurent | lau.sion@gmail.com         | azerty1!   | 0617382442 | Sion      | Laurent | 134 rue jean jaures     | 59172 | Roeulx | true     | NOK  | 2008 | false |
+      | lvclaurent | lau.sion@gmail.com         | AZERTY1!   | 0617382442 | Sion      | Laurent | 134 rue jean jaures     | 59172 | Roeulx | true     | NOK  | 2008 | false |
       | lvclaurent | lau.sion@gmail.com         | Azerty1!   | 0617382442 | Sion      | Laurent | 134 rue jean jaures     | 59172 | Roeulx | true     | OK   |  200 | true  |
       | Marcel     | laurent.sion@gfi.fr        | Sdv!!d478  | 0385356845 | Sion      | Marcel  | 134 rue jean jaures     | 62136 | Roeulx | true     | OK   |  200 | false |
       | Marcel     | lau2.sion@gmail.com        | Msdji48??  | 0754236845 | Sion      | Laurent | 10 rue Leo Lagrange     | 59874 | Ouille | false    | NOK  | 2001 | false |
@@ -33,6 +33,8 @@ Feature: account
       | Marcel63   | newadress@hotmail.com      | Qsdfgh21!  |            | Sion      | bilbon  | 134 rue jean jaures     | 59172 |  59172 | true     | OK   |  200 | false |
       | Marcel62   | newadress3@hotmail.com     |            | 0785352156 | Sion      | bilbon  | 134 rue jean jaures     | 59172 |  59172 | true     | NOK  | 2008 | false |
       | Marcel62   | newadress3@hotmail.com     | Qsdfgh21!  | 0785352156 |           |         |                         |       |        | true     | OK   |  200 | false |
+      | Marcel83   | newadres12@hotmail.com     | Qsdfgh21!  | 0786542156 |           |         |                         |       |        | true     | OK   |  200 | false |
+      | Marcel85   | newadres65@hotmail.com     | Qsdfgh21!  | 0785355486 |           |         |                         |       |        | true     | OK   |  200 | false |
 
   @tag2
   Scenario Outline: L admin veut ajouter un admin en base
@@ -76,14 +78,15 @@ Feature: account
     Then L admin vérifie que "<login>" est bien <retour>
 
     Examples: 
-      | login      | retour | loginAdmin | mdpAdmin |
-      | lvclaurent |    200 | lvclaurent | Azerty1! |
-      | bakanezumi |    200 | lvclaurent | Azerty1! |
-      | bakanezumi |   2011 | lvclaurent | Azerty3! |
-      | Marcel69   |   2005 | lvclaurent | Azerty1! |
-      |            |    400 | lvclaurent | Azerty1! |
-      | bakanezumi |   2008 | lvclaurent |          |
-      | bakanezumi |    400 |            | Azerty1! |
+      | login      | retour | loginAdmin | mdpAdmin  |
+      | lvclaurent |   2070 | Marcel62   | Qsdfgh21! |
+      | lvclaurent |    200 | lvclaurent | Azerty1!  |
+      | bakanezumi |    200 | lvclaurent | Azerty1!  |
+      | bakanezumi |   2011 | lvclaurent | Azerty3!  |
+      | Marcel69   |   2005 | lvclaurent | Azerty1!  |
+      |            |    400 | lvclaurent | Azerty1!  |
+      | bakanezumi |   2008 | lvclaurent |           |
+      | bakanezumi |    400 |            | Azerty1!  |
 
   @tag5
   Scenario Outline: L admin veut ajouter l acces à la position pour un utilisateur
@@ -92,12 +95,13 @@ Feature: account
     Then La demande est bien enregistrer en base avec un retour <retour>
 
     Examples: 
-      | login       | retour | loginAdmin | mdpAdmin |
-      | lvclaurent  |    200 | lvclaurent | Azerty1! |
-      | lvclaurent5 |   2005 | lvclaurent | Azerty1! |
-      |             |    400 | lvclaurent | Azerty1! |
-      | lvclaurent5 |   2005 |            | Azerty1! |
-      | lvclaurent5 |   2008 | lvclaurent |          |
+      | login       | retour | loginAdmin | mdpAdmin  |
+      | lvclaurent  |   2070 | Marcel62   | Qsdfgh21! |
+      | lvclaurent  |    200 | lvclaurent | Azerty1!  |
+      | lvclaurent5 |   2005 | lvclaurent | Azerty1!  |
+      |             |    400 | lvclaurent | Azerty1!  |
+      | lvclaurent5 |   2005 |            | Azerty1!  |
+      | lvclaurent5 |   2008 | lvclaurent |           |
 
   @tag6
   Scenario Outline: Un utilisateur vérifie si il a acces a localizer
@@ -121,20 +125,42 @@ Feature: account
     Then l utilisateur nes pas présent en base avec un <retour>
 
     Examples: 
-      | login       | retour | loginAdmin | password |
-      | lvclaurent3 |   2005 | lvclaurent | Azerty1! |
-      | Marcel62    |   2011 | lvclaurent | Azerty3! |
-      | Marcel62    |   2008 | lvclaurent |          |
-      | Marcel62    |    400 |            | Azerty1! |
-      | Marcel62    |    200 | lvclaurent | Azerty1! |
-      | bakanezumi  |   2020 | lvclaurent | Azerty1! |
-      | lvclaurent3 |   2005 | lvclaurent | Azerty1! |
-      | lvclaurent3 |   2005 |            | Azerty1! |
-      |             |    400 | lvclaurent | Azerty1! |
-      | lvclaurent3 |   2005 | lvclaurent | Azerty1! |
+      | login       | retour | loginAdmin | password  |
+      | lvclaurent  |   2070 | Marcel62   | Qsdfgh21! |
+      | lvclaurent3 |   2005 | lvclaurent | Azerty1!  |
+      | Marcel62    |   2011 | lvclaurent | Azerty3!  |
+      | Marcel62    |   2008 | lvclaurent |           |
+      | Marcel62    |    400 |            | Azerty1!  |
+      | Marcel62    |    200 | lvclaurent | Azerty1!  |
+      | bakanezumi  |   2020 | lvclaurent | Azerty1!  |
+      | lvclaurent3 |   2005 | lvclaurent | Azerty1!  |
+      | lvclaurent3 |   2005 |            | Azerty1!  |
+      |             |    400 | lvclaurent | Azerty1!  |
+      | lvclaurent3 |   2005 | lvclaurent | Azerty1!  |
 
   @tag8
+  Scenario Outline: L admin récupère la liste des compte inactif
+    Given L api recherche l ensemble des utilisateurs non actif
+    When l API fait la recherche de la liste des inactif
+    Then Vérification qu il y a bien le <nb> de compte inactif 
+
+    Examples: 
+      | nb |
+      | 4  |
+
+  @tag9
   Scenario Outline: L api supprime tout les utilisateurs en base
     Given L api recherche l ensemble des utilisateurs
     When l API fait la suppression de l ensemble des uutilisateur
     Then Il n y a plus rien dans la base
+
+
+  @tag10
+  Scenario Outline: L admin récupère la liste des compte inactif
+    Given L api recherche l ensemble des utilisateurs non actif
+    When l API fait la recherche de la liste des inactif
+    Then Vérification qu il y a bien le <nb> de compte inactif 
+
+    Examples: 
+      | nb |
+      | 0  |
