@@ -70,9 +70,18 @@ public class AccountService implements IAccountService {
 
 	@Override
 	public void getLoginUnique(final String login) throws JarvisException {
-		if (this.getByLogin(login) != null) {
-			throw new JarvisFunctionalException(AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_MESSAGE,
-					AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_INFO, AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_CODE);
+		try {
+			if (this.getByLogin(login) != null) {
+				throw new JarvisFunctionalException(AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_MESSAGE,
+						AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_INFO,
+						AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_CODE);
+			}
+		} catch (final JarvisException e) {
+			if (!AccountConstant.RETURN_LOGIN_UNKNOW_CODE.equals(e.getCode())) {
+				throw new JarvisFunctionalException(AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_MESSAGE,
+						AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_INFO,
+						AccountConstant.RETURN_ACCOUNT_LOGIN_ERROR_CODE);
+			}
 		}
 	}
 
@@ -82,7 +91,9 @@ public class AccountService implements IAccountService {
 			throw new JarvisFunctionalException(AccountConstant.RETURN_ERROR_BAD_REQUEST_MESSAGE,
 					AccountConstant.RETURN_ERROR_BAD_REQUEST_INFO, AccountConstant.RETURN_ERROR_BAD_REQUEST_CODE);
 		}
-		return this.accountRepo.findByLogin(login);
+		final Account result = this.accountRepo.findByLogin(login);
+		this.verifAccount(result);
+		return result;
 	}
 
 	@Override
@@ -217,9 +228,15 @@ public class AccountService implements IAccountService {
 	}
 
 	@Override
-	public void deleteAccount(final String login) throws JarvisException {
-		// TODO Auto-generated method stub
-
+	public void deleteAccount(final String login, final Account account) throws JarvisException {
+		if (this.isAdmin(account.getLogin()) && this.connexionToApi(account)) {
+			final Account accountDelete = this.getByLogin(login);
+			this.verifAccount(accountDelete);
+			this.accountRepo.delete(accountDelete);
+		} else {
+			throw new JarvisFunctionalException(AccountConstant.RETURN_ERROR_NON_ADMIN_MESSAGE,
+					AccountConstant.RETURN_ERROR_NON_ADMIN_INFO, AccountConstant.RETURN_ERROR_NON_ADMIN_CODE);
+		}
 	}
 
 	@Override

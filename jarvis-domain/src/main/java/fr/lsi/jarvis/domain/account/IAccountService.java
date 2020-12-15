@@ -135,9 +135,10 @@ public interface IAccountService {
 	 * delete one account
 	 *
 	 * @param login
+	 * @param account
 	 * @throws JarvisException
 	 */
-	public void deleteAccount(final String login) throws JarvisException;
+	public void deleteAccount(final String login, final Account account) throws JarvisException;
 
 	/**
 	 * Service pour connexion

@@ -83,7 +83,7 @@ public class CreateAccountStep extends TestConfig {
 				assertFalse(etat);
 			}
 		} catch (final JarvisException e) {
-			assertTrue(e.getCode().equals(Integer.valueOf(400)));
+			assertTrue(e.getCode().equals(Integer.valueOf(2005)) || e.getCode().equals(Integer.valueOf(400)));
 		}
 	}
 
