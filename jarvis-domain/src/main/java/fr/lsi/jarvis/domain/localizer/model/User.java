@@ -1,5 +1,7 @@
 package fr.lsi.jarvis.domain.localizer.model;
 
+import java.beans.Transient;
+
 /**
  * Entity user
  *
@@ -80,6 +82,7 @@ public class User {
 	/**
 	 * @return the location
 	 */
+	@Transient
 	public final Location getLocation() {
 		return this.location;
 	}

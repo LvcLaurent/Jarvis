@@ -3,6 +3,8 @@
  */
 package fr.lsi.jarvis.exposition.localizer;
 
+import java.util.List;
+
 /**
  * @author Laurent SION
  *
@@ -11,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fr.lsi.jarvis.domain.exception.JarvisException;
 import fr.lsi.jarvis.domain.localizer.ILocalizerService;
+import fr.lsi.jarvis.domain.localizer.model.Location;
 import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerIn;
 import fr.lsi.jarvis.domain.localizer.model.exposition.LocalizerOut;
 import fr.lsi.jarvis.domain.localizer.model.exposition.LocationAddIn;
@@ -95,6 +99,20 @@ public class LocalizerController {
 	public void addUser(@RequestBody final LocationAddUser request) throws JarvisException {
 		LOGGER.info("add location");
 		this.localizerService.addUserInLocation(request.getLocationName(), request.getName(), request.getIdCmd());
+
+	}
+
+	/**
+	 * get all Location
+	 *
+	 * @param request request
+	 * @throws JarvisException
+	 */
+	@ApiOperation(value = "add user")
+	@GetMapping(value = "/localize/getLocation")
+	public List<Location> getLocation() throws JarvisException {
+		LOGGER.info("add location");
+		return this.localizerService.findAllEntity();
 
 	}
 
